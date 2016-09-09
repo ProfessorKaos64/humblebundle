@@ -33,7 +33,6 @@ import re
 import json
 import logging
 import argparse
-import xdg.BaseDirectory as xdg
 import time
 import cookielib
 from urlparse import urljoin, urlsplit, parse_qs
@@ -43,6 +42,8 @@ import subprocess
 import shlex
 import shutil
 
+# Debian/Ubuntu: python-xdg
+import xdg.BaseDirectory as xdg
 try:
     # Debian/Ubuntu: python-keyring
     import keyring
@@ -826,10 +827,22 @@ def read_config(args, appname=None, configdir=None):
     if keyring:
         log.debug("Reading credentials from keyring")
         try:
-            username, password = (keyring.get_password(appname, '').split('\n') +
-                                  ['\n'])[:2]
+            username, password = (
+                keyring.get_password(appname, appname).split('\n') +
+                ['\n']
+            )[:2]
         except AttributeError as e:
-            log.warn("Credentials not found in keyring. First time usage?")
+            # Check for old keyring format and migrate before throwing warning
+            data = keyring.get_password(appname, '')
+            if data:
+                log.info("Migrating credentials to new keyring format")
+                keyring.set_password(appname, appname, data)
+                try:
+                    keyring.delete_password(appname, '')
+                except AttributeError as e:
+                    log.warn("Error deleting old keyring. Outdated library? (%s)", e)
+            else:
+                log.warn("Credentials not found in keyring. First time usage?")
         except IOError as e:  # keyring sometimes raises this
             log.error(e)
     else:
@@ -847,7 +860,7 @@ def read_config(args, appname=None, configdir=None):
     if args.username or args.password:
         log.info("Saving credentials")
         if keyring:
-            keyring.set_password(appname, '',
+            keyring.set_password(appname, appname,
                                  '%s\n%s' % (args.username or username,
                                              args.password or password,))
         else:
@@ -954,9 +967,9 @@ def parseargs(argv=None):
     return args, parser
 
 
+def cli():
+    global APPNAME, CONFIGDIR, CACHEDIR
 
-
-if __name__ == '__main__':
     APPNAME   = osp.basename(osp.splitext(__file__)[0])
     CONFIGDIR = xdg.save_config_path(APPNAME)  # creates the dir
     CACHEDIR  = osp.join(xdg.xdg_cache_home, APPNAME)
@@ -973,3 +986,7 @@ if __name__ == '__main__':
     except Exception as e:
         log.critical(e, exc_info=True)
         sys.exit(1)
+
+
+if __name__ == '__main__':
+    cli()
