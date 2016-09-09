@@ -11,10 +11,6 @@ install_requires = [
     'pyxdg',
 ]
 
-# sys.path.append is used for this specific build to give
-# access to the resources normally in the GitHub directory
-# See: debian/install for a file listing.
-
 if sys.platform.startswith('linux'):
 
     install_requires += [
@@ -26,6 +22,7 @@ setup(
     name='humblebundle',
     version='0.0.0',
     url='https://github.com/MestreLion/humblebundle',
+    zip_safe=False
     packages=find_packages('humblebundle', exclude=['tests']),
     include_package_data=True,
     setup_requires=['setuptools-git'],
