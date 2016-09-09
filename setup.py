@@ -30,12 +30,16 @@ if sys.platform.startswith('linux'):
 
 setup(
     name='humblebundle',
-    author='https://github.com/MestreLion'
+    author='https://github.com/MestreLion',
     url='https://github.com/MestreLion/humblebundle',
     version='0.1.0',
     license='GPLv3',
-    zip_safe=False
+    zip_safe=False,
     packages=find_packages('humblebundle', exclude=['tests']),
+    package_data={
+        'humblebundle': 
+			['humblebundle/*']
+    },
     include_package_data=True,
     setup_requires=['setuptools-git'],
     install_requires=install_requires,
