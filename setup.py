@@ -35,12 +35,10 @@ setup(
     version='0.1.0',
     license='GPLv3',
     zip_safe=False,
-    packages=find_packages('humblebundle', exclude=['tests']),
-    package_data={
-        'humblebundle': 
-			['humblebundle/*']
-    },
     include_package_data=True,
+    packages=find_packages('humblebundle', exclude=['tests']),
+    package_dir={'humblebundle': 'humblebundle'},
+    package_data={'humblebundle': ['humblebundle/*']},
     setup_requires=['setuptools-git'],
     install_requires=install_requires,
     entry_points={
