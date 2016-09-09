@@ -43,7 +43,6 @@ setup(
     include_package_data=True,
     setup_requires=['setuptools-git'],
     install_requires=install_requires,
-    console=[ os.path.join('humblebundle', 'humblebundle.py') ],
     entry_points={
         'console_scripts': [
             'humblebundle = humblebundle:cli',
