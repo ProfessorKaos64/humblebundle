@@ -4,6 +4,16 @@ import os
 from distutils.core import setup
 from setuptools import find_packages
 
+# To use a consistent encoding
+from codecs import open
+from os import path
+
+here = path.abspath(path.dirname(__file__))
+
+# Get the long description from the README file
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
 install_requires = [
     'lxml',
     'progressbar',
@@ -20,8 +30,10 @@ if sys.platform.startswith('linux'):
 
 setup(
     name='humblebundle',
-    version='0.0.0',
+    author='https://github.com/MestreLion'
     url='https://github.com/MestreLion/humblebundle',
+    version='0.1.0',
+    license='GPLv3',
     zip_safe=False
     packages=find_packages('humblebundle', exclude=['tests']),
     include_package_data=True,
