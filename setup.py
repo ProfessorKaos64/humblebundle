@@ -28,15 +28,9 @@ setup(
     long_description=open('README.md').read(),
     version='0.0.0',
     url='https://github.com/MestreLion/humblebundle',
-    packages=find_packages('humblebundle', exclude=.gitignore),
+    packages=find_packages('humblebundle', exclude='.gitignore'),
     include_package_data=True,
-    package_data={
-                'humblebundle': ['hooks/*'],
-                'humblebundle': ['installers/*'],
-                'humblebundle': ['*json*']',
-                'humblebundle': ['*py*']',
-                'humblebundle': ['makeinstall']
-                }
+    package_data={'humblebundle': ['hooks/*', 'installers/*', '*json*', '*py*', 'makeinstall']}
     setup_requires=['setuptools-git'],
     console=[ os.path.join('humblebundle.py') ],
     install_requires=install_requires,
