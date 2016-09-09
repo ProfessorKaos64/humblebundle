@@ -38,7 +38,6 @@ setup(
     include_package_data=True,
     packages=find_packages(exclude=['tests']),
     package_dir={'humblebundle': 'humblebundle'},
-    package_data={'humblebundle': ['humblebundle/*']},
     setup_requires=['setuptools-git'],
     install_requires=INSTALL_REQUIRES,
     entry_points={
