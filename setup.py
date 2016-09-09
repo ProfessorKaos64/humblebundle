@@ -1,7 +1,7 @@
 import sys
 import os
 
-from distutils.core import setup
+# Always prefer setuptools over distutils
 from setuptools import find_packages
 
 # To use a consistent encoding
