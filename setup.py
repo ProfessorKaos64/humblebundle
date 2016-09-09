@@ -14,7 +14,7 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-install_requires = [
+INSTALL_REQUIRES = [
     'lxml',
     'progressbar',
     'keyring',
@@ -23,7 +23,7 @@ install_requires = [
 
 if sys.platform.startswith('linux'):
 
-    install_requires += [
+    INSTALL_REQUIRES += [
         'dbus-python',   # requires libdbus-glib-1-dev
         'secretstorage',
     ]
@@ -36,11 +36,11 @@ setup(
     license='GPLv3',
     zip_safe=False,
     include_package_data=True,
-    packages=find_packages('humblebundle', exclude=['tests']),
+    packages=find_packages(exclude=['tests']),
     package_dir={'humblebundle': 'humblebundle'},
     package_data={'humblebundle': ['humblebundle/*']},
     setup_requires=['setuptools-git'],
-    install_requires=install_requires,
+    install_requires=INSTALL_REQUIRES,
     entry_points={
         'console_scripts': [
             'humblebundle = humblebundle:cli',
